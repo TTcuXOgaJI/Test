@@ -1,22 +1,7 @@
 <?php
 
-class Article
-{
-    public $title;
-    public $text;
+require __DIR__ . '/models/news.php';
 
-    public function __construct($title, $text)
-    {
-        $this->title = $title;
-        $this->text = $text;
-    }
+$items=newsGetAll();
 
-    public function view()
-    {
-        echo $this->title;
-        echo "<br>";
-        echo $this->text;
-    }
-}
-$a = new Article('news Titile','news Text');
-$a->view();
+include __DIR__ . '/views/index.php';
