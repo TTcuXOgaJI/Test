@@ -14,10 +14,10 @@ if (!empty($_POST)) {
         $a = new NewsArticle();
         $res = $a->File_upload('news');
         if (false !== $res) {
-            $data['news'] = $res;
+            $data['file'] = $res;
         }
     }
-    if (isset($data['date']) && isset($data['title']) && isset($data['news'])) {
+    if (isset($data['date']) && isset($data['title']) && isset($data['file'])) {
         insertNews($data);
         header('Location: index.php');
         die;

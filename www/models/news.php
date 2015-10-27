@@ -1,6 +1,5 @@
 <?php
 require_once __DIR__ . '/../function/Database.php';
-require_once __DIR__ . '/../function/file.php';
 
 function newsGetAll()
 {
@@ -11,12 +10,15 @@ function newsGetAll()
 
 function insertNews($news)
 {
-    $db = new DataBase('localhost', 'root', 'test');
+    $db = new DataBase();
     $date = mysql_real_escape_string(date('Y-m-d', strtotime($news['date'])));
     $title = mysql_real_escape_string($news['title']);
-    $path = mysql_real_escape_string($news['news']);
-    $sql = "INSERT INTO news ( date , title, path )VALUES ('$date','$title','$path')";
-    return $db->insertToTable($sql);
+    $file=$news['file'];
+    $image = mysql_real_escape_string(file_get_contents($file));
+    if ($_FILES['news']['size']) {
+        $sql = "INSERT INTO news ( date , title, path )VALUES ('$date','$title','$image')";
+        return $db->insertToTable($sql);
+    }
 }
 
 function newsGetChosen($newsID)
