@@ -5,16 +5,16 @@ class DataBase
 {
     public function __construct()
     {
-        mysql_connect('localhost','root', '');
+        mysql_connect('localhost', 'root', '');
         mysql_select_db('test');
     }
 
-    private function query($sql)
+    public function query($sql, $class = 'stdClass')
     {
         $data = [];
         if ($result = mysql_query($sql)) {
 
-            while (false != ($row = mysql_fetch_assoc($result))) {
+            while (false != ($row = mysql_fetch_object($result, $class))) {
                 $data[] = $row;
             }
         }
@@ -32,10 +32,6 @@ class DataBase
         return $this->exec($sql);
     }
 
-    public function getTable($sql)
-    {
-        return $this->query($sql);
-    }
 
     public function getChosen($sql)
     {
