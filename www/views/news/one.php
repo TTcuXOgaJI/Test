@@ -6,7 +6,7 @@
 <table border="1">
     <tr>
         <th>Date</th>
-        <th>Newss Title</th>
+        <th>News Title</th>
         <th>News</th>
     </tr>
     <?php
