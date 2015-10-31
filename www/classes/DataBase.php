@@ -9,7 +9,7 @@ class DataBase
         mysql_select_db('test');
     }
 
-    public function query($sql, $class = 'stdClass')
+    public function queryAll($sql, $class = 'stdClass')
     {
         $data = [];
         if ($result = mysql_query($sql)) {
@@ -21,20 +21,8 @@ class DataBase
         return $data;
     }
 
-    private function exec($sql)
+    public function queryOne($sql, $class = 'stdClass')
     {
-        $result = mysql_query($sql);
-        return $result;
-    }
-
-    public function insertToTable($sql)
-    {
-        return $this->exec($sql);
-    }
-
-
-    public function getChosen($sql)
-    {
-        return $this->query($sql);
+        return $result = $this->queryAll($sql, $class)[0];
     }
 }

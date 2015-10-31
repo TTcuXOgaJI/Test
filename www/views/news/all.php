@@ -17,8 +17,8 @@
             foreach ($items as $item): ?>
                 <tr>
                     <td><?php echo $item->date; ?></td>
-                    <td><br><a
-                            href="/PHPTest/www/fullnews.php/?id=<?php echo $item->id; ?>"><?php echo $item->title; ?></a>
+                    <td><br>
+                        <a href="index.php?ctrl=News&act=One&id=<?php echo $item->id?>"><?php echo $item->title ?></a>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -29,7 +29,7 @@
     </div>
 <?php } ?>
 <br>
-<?php include __DIR__ . '/form.php'; ?>
+<?php include __DIR__ . '/../addForm.php'; ?>
 
 </body>
 </html>
