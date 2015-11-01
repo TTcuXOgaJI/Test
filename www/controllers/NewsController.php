@@ -14,15 +14,14 @@ class NewsController
     {
         $news = News::getAll();
         $view = new View();
-        $view->items = $news;;
-        echo $view->display('news/all.php');
+        $view->items = $news;
+        $view->display('news/all.php');
 
     }
 
     public function actionOne()
     {
         if (empty($_GET['id'])) {
-
             $message = 'There is no such news ';
             $this->errMSG($message);
         } else {

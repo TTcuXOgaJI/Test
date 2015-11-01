@@ -3,6 +3,7 @@
 abstract class AbstractModel implements IModel
 {
 
+    /*
     public static function getAll()
     {
         $db = new DataBase;
@@ -17,6 +18,6 @@ abstract class AbstractModel implements IModel
         $sql = 'SELECT * FROM' . ' ' . static::$table . ' WHERE id=' . $ID . ' ';
         return $db->queryOne($sql, static::$class);
     }
-
+*/
 
 }
