@@ -13,10 +13,10 @@ class DataBase
     {
         $data = [];
         if ($result = mysql_query($sql)) {
-
             while (false != ($row = mysql_fetch_object($result, $class))) {
                 $data[] = $row;
             }
+
         }
         return $data;
     }
@@ -24,5 +24,15 @@ class DataBase
     public function queryOne($sql, $class = 'stdClass')
     {
         return $result = $this->queryAll($sql, $class)[0];
+    }
+
+    public function queryInsert($sql)
+    {
+        if (mysql_query($sql)) {
+            $result = true;
+        } else {
+            $result = false;
+        }
+        return $result;
     }
 }

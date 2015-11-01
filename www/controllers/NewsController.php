@@ -1,24 +1,36 @@
 <?php
-//require_once __DIR__ . '/../models/News.php';
-//require_once __DIR__ . '/../classes/Article.php';
 
 class NewsController
 {
+
+    private function errMSG($message)
+    {
+        $view = new View();
+        $view->message = $message;
+        $view->display('news/Error.php');
+    }
+
     public function actionAll()
     {
-        $items = News::newsGetAll();
-        include __DIR__ . '/../views/news/all.php';
+        $news = News::getAll();
+        $view = new View();
+        $view->items = $news;;
+        echo $view->display('news/all.php');
+
     }
 
     public function actionOne()
     {
         if (empty($_GET['id'])) {
+
             $message = 'There is no such news ';
-            include __DIR__ . '/../views/Error.php';
+            $this->errMSG($message);
         } else {
             $news_id = $_GET['id'];
-          $full_news = News::newsGetChosen($news_id);
-            include __DIR__ . '/../views/news/one.php';
+            $item = News::getChosen($news_id);
+            $view = new View();
+            $view->item = $item;
+            $view->display('news/one.php');
 
         }
     }
@@ -41,8 +53,13 @@ class NewsController
                 }
             }
             if (isset($data['date']) && isset($data['title']) && isset($data['file'])) {
-                News::insertNews($data);
-                header('Location: index.php');
+
+                if (News::insertNews($data)) {
+                    $this->actionAll();
+                } else {
+                    $message = 'Fail To load File';
+                    $this->errMSG($message);
+                }
                 die;
             }
         }

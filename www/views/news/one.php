@@ -10,12 +10,12 @@
         <th>News</th>
     </tr>
     <?php
-    if (!empty($full_news)): ?>
+    if (!empty($item)): ?>
         <tr>
-            <td><?php echo $full_news->date; ?></td>
-            <td><?php echo $full_news->title; ?></td>
+            <td><?php echo $item->date; ?></td>
+            <td><?php echo $item->title; ?></td>
             <td><p style="word-break: break-all">
-                    <?php $text = $full_news->path;
+                    <?php $text = $item->path;
                     if (isset($text)) {
                         echo $text; ?>
                     <?php } else {
