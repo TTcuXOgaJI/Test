@@ -1,4 +1,4 @@
-<form action="index.php?ctrl=News&act=Insert" method="post" enctype="multipart/form-data">
+<form action="/PHPTest/www/index.php?ctrl=News&act=Insert" method="post" enctype="multipart/form-data">
     <label for="title">News Title</label>
     <input type="text" id="title" name="title">
     <input type="hidden" id="news" name="date" value="<?php $today = date('d.m.Y');

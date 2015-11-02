@@ -3,36 +3,56 @@
 
 class DataBase
 {
+    private $dataBaseHeandler;
+    private $className = 'stdClass';
+
     public function __construct()
     {
-        mysql_connect('localhost', 'root', '');
-        mysql_select_db('test');
+        $this->dataBaseHeandler = new PDO('mysql:dbname=test;host=localhost', 'root', '');
     }
 
-    public function queryAll($sql, $class = 'stdClass')
+    public function setClassName($className)
     {
-        $data = [];
-        if ($result = mysql_query($sql)) {
-            while (false != ($row = mysql_fetch_object($result, $class))) {
-                $data[] = $row;
-            }
-
-        }
-        return $data;
+        $this->className = $className;
     }
 
-    public function queryOne($sql, $class = 'stdClass')
+    public function query($sql, $params = [])
     {
-        return $result = $this->queryAll($sql, $class)[0];
+        $statementHeandler = $this->dataBaseHeandler->prepare($sql);
+        $statementHeandler->execute($params);
+        return $statementHeandler->fetchAll(PDO::FETCH_CLASS, $this->className);
     }
 
-    public function queryInsert($sql)
+    public function execute($sql, $params = [])
     {
-        if (mysql_query($sql)) {
-            $result = true;
-        } else {
-            $result = false;
-        }
-        return $result;
+        $statementHeandler = $this->dataBaseHeandler->prepare($sql);
+        return $statementHeandler->execute($params);
     }
+    /*
+       public function queryAll($sql, $class = 'stdClass')
+       {
+           $data = [];
+           if ($result = mysql_query($sql)) {
+               while (false != ($row = mysql_fetch_object($result, $class))) {
+                   $data[] = $row;
+               }
+
+           }
+           return $data;
+       }
+
+       public function queryOne($sql, $class = 'stdClass')
+       {
+           return $result = $this->queryAll($sql, $class)[0];
+       }
+
+       public function queryInsert($sql)
+       {
+           if (mysql_query($sql)) {
+               $result = true;
+           } else {
+               $result = false;
+           }
+           return $result;
+       }*/
 }

@@ -3,7 +3,9 @@
 <head>
 </head>
 <body>
-<?php if (!empty($items)) { ?>
+
+<?php
+if (!empty($items)) { ?>
     <div style=margin:auto;">
 
         <table border="1">
@@ -18,7 +20,7 @@
                 <tr>
                     <td><?php echo $item->date; ?></td>
                     <td><br>
-                        <a href="index.php?ctrl=News&act=One&id=<?php echo $item->id ?>"><?php echo $item->title ?></a>
+                        <a href="/PHPTest/www/index.php?ctrl=News&act=One&id=<?php echo $item->id ?>"><?php echo $item->title ?></a>
                     </td>
                 </tr>
             <?php endforeach; ?>

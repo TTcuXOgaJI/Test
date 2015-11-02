@@ -2,7 +2,13 @@
 
 interface IModel
 {
-    public static function getAll();
+    public function findAll();
 
-    public static function getChosen($ID);
+    public function findOneByPK();
+
+    public function insert();
+
+    public function deleteRow();
+
+    public function updateRow();
 }

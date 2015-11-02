@@ -3,21 +3,70 @@
 abstract class AbstractModel implements IModel
 {
 
-    /*
-    public static function getAll()
+    static protected $table;
+
+    protected $data = [];
+
+    public function __set($k, $v)
     {
-        $db = new DataBase;
-        $sql = ('SELECT * FROM' . ' ' . static::$table);
-        return $db->queryAll($sql, static::$class);
+        $this->data[$k] = $v;
     }
 
-    public static function getChosen($ID)
+    public function __get($k)
     {
+        return $this->data[$k];
+    }
+
+    public function findAll()
+    {
+        $class = get_called_class();
+        $sql = 'SELECT * FROM ' . static::$table;
         $db = new DataBase();
-        $ID = mysql_real_escape_string($ID);
-        $sql = 'SELECT * FROM' . ' ' . static::$table . ' WHERE id=' . $ID . ' ';
-        return $db->queryOne($sql, static::$class);
+        $db->setClassName($class);
+        return $db->query($sql);
     }
-*/
 
+    public function findOneByPK()
+    {
+        $sql = 'SELECT * FROM ' . static::$table . ' WHERE id=:id';
+        $db = new DataBase();
+        return $db->query($sql, [':id' => $this->id])[0];
+    }
+
+    public function insert()
+    {
+        $cols = array_keys($this->data);
+        $data = [];
+        $db = new DataBase();
+        foreach ($cols as $col) {
+
+            $data[':' . $col] = $this->data[$col];
+        }
+        $sql = 'INSERT INTO ' . static::$table . ' (' . implode(',', $cols) . ') VALUES (' . implode(',', array_keys($data)) . ')';
+        return $db->execute($sql, $data);
+    }
+
+    public function deleteRow()
+    {
+        $sql = 'DELETE FROM ' . static::$table . ' WHERE id=:id';
+        $db = new DataBase();
+        return $db->execute($sql, [':id' => $this->id]);
+    }
+
+    public function updateRow()
+    {
+        $cols = [];
+        $data = [];
+        $db = new DataBase();
+        foreach ($this->data as $k => $v) {
+            $data[':' . $k] = $v;
+            if ('id' == $k) {
+                continue;
+            }
+            $cols[] = $k . '=:' . $k;
+        }
+        $sql = ' UPDATE ' . static::$table . ' SET ' . implode(', ', $cols) . ' WHERE id=:id';
+        return $db->execute($sql, $data);
+
+    }
 }

@@ -1,8 +1,8 @@
 <?php
 
-class NewsArticle extends Article
+abstract class File
 {
-    public function File_upload($field)
+    public static function File_upload($field)
     {
         if (empty($_FILES))
             return false;

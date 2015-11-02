@@ -10,8 +10,14 @@ class View implements Iterator
         $this->data[$k] = $v;
     }
 
+    public function __get($k)
+    {
+        return $this->data[$k];
+    }
+
     public function render($template)
     {
+
         foreach ($this->data as $key => $val) {
             $$key = $val;
         }
